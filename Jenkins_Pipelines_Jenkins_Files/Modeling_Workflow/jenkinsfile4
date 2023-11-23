@@ -45,7 +45,7 @@ pipeline {
                     string(name: 'TARGET_ENVIRONMENT', defaultValue: 'PROD', description: 'Target deployment environment')
                 }
             }
-	stage('Deploy') {
+	stage('DeployDEV') {
             input {
                 message 'Deploy?'
                 ok 'Do it!'
