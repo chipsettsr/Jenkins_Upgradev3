@@ -1,18 +1,58 @@
-version: "3"
-services:
-  sonarqube:
-    image: sonarqube:lts
-    ports:
-      - 9000:9000
-    networks:
-      - mynetwork
-    environment:
-      - SONAR_FORCEAUTHENTICATION=false
-  jenkins:
-    image: jenkins/jenkins:2.319.1-jdk11
-    ports:
-      - 8080:8080
-    networks:
-      - mynetwork
-networks:
-  mynetwork:
+pipeline {
+    agent any
+    environment {
+        RELEASE='20.04'
+    }
+    stages {
+        stage('Build') {
+            environment {
+                LOG_LEVEL='INFO'
+            }
+            parallel {
+                stage('linux-arm64') {
+                    agent any
+                    steps {
+                        echo "Building release ${RELEASE} for ${STAGE_NAME} with log level ${LOG_LEVEL}..."
+                        sh 'sleep 10'
+                    }
+                }
+                stage('linux-amd64') {
+                    agent any
+                    steps {
+                        echo "Building release ${RELEASE} for ${STAGE_NAME} with log level ${LOG_LEVEL}..."
+                        sh 'sleep 20'
+                    }
+                }
+                stage('windows-amd64') {
+                    agent any
+                    steps {
+                        echo "Building release ${RELEASE} for ${STAGE_NAME} with log level ${LOG_LEVEL}..."
+                        sh 'sleep 30'
+                    }
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                echo "Testing release ${RELEASE}..."
+            }
+        }
+        stage('Deploy') {
+            input {
+                message 'Deploy?'
+                ok 'Do it!'
+                parameters {
+                    string(name: 'TARGET_ENVIRONMENT', defaultValue: 'PROD', description: 'Target deployment environment')
+                }
+            }
+            steps {
+                echo "Deploying release ${RELEASE} to environment ${TARGET_ENVIRONMENT}"
+            }
+        }        
+    }
+    post{
+        always {
+             echo 'Prints whether deploy happened or not, success or failure'
+        }
+    }
+}
