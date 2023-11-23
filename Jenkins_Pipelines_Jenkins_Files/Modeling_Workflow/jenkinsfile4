@@ -45,7 +45,8 @@ pipeline {
                     string(name: 'TARGET_ENVIRONMENT', defaultValue: 'PROD', description: 'Target deployment environment')
                 }
             }
-stage('Deploy') {
+		}	
+		stage('Deploy') {
             input {
                 message 'Deploy?'
                 ok 'Press OK!'
@@ -53,7 +54,8 @@ stage('Deploy') {
                     string(name: 'TARGET_ENVIRONMENT', defaultValue: 'DEV', description: 'Target deployment environment')
                 }
             }
-stage('Deploy') {
+		}
+		stage('Deploy') {
             input {
                 message 'Deploy?'
                 ok 'click!'
@@ -61,6 +63,7 @@ stage('Deploy') {
                     string(name: 'TARGET_ENVIRONMENT', defaultValue: 'QA', description: 'Target deployment environment')
                 }
             }
+		}
 steps {
                 echo "Deploying release ${RELEASE} to environment ${TARGET_ENVIRONMENT}"
             }
