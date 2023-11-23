@@ -45,26 +45,15 @@ pipeline {
                     string(name: 'TARGET_ENVIRONMENT', defaultValue: 'PROD', description: 'Target deployment environment')
                 }
             }
-		}	
-		stage('Deploy') {
+	stage('Deploy') {
             input {
                 message 'Deploy?'
-                ok 'Press OK!'
+                ok 'Do it!'
                 parameters {
                     string(name: 'TARGET_ENVIRONMENT', defaultValue: 'DEV', description: 'Target deployment environment')
                 }
             }
-		}
-		stage('Deploy') {
-            input {
-                message 'Deploy?'
-                ok 'click!'
-                parameters {
-                    string(name: 'TARGET_ENVIRONMENT', defaultValue: 'QA', description: 'Target deployment environment')
-                }
-            }
-		}
-steps {
+            steps {
                 echo "Deploying release ${RELEASE} to environment ${TARGET_ENVIRONMENT}"
             }
         }        
@@ -72,6 +61,7 @@ steps {
     post{
         always {
              echo 'Prints whether deploy happened or not, success or failure'
-        }
-    }
+        	}
+ 	 }
+}
 }
