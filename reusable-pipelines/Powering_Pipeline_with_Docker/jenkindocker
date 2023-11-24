@@ -15,7 +15,7 @@ pipeline {
       stage('just check') {
         steps {
           sh '''
-              docker -version
+              echo "testtest"
             '''
           sh 'printenv'
           sh 'ls -l $WORKSPACE'
