@@ -16,6 +16,7 @@ pipeline {
         steps {
           sh '''
               echo "testtest"
+             sleep  300
             '''
           sh 'printenv'
           sh 'ls -l $WORKSPACE'
