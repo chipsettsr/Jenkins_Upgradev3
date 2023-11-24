@@ -1,8 +1,25 @@
 pipeline {
     agent {
         docker {
-            image 'ubuntu:latest'
+            image 'ngnix:latest'
             args '-u root'
         }
     }
+    
+    environment {
+      VERSION = '0.1.0'
+      RELEASE_VERSION = 'R.2'
+    }
+
+    stages {
+      stage('Audit tools') {
+        steps {
+          sh '''
+              docker -version
+            '''
+          sh 'printenv'
+          sh 'ls -l $WORKSPACE'
+        }
+      }
+}
 }
